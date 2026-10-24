@@ -1,0 +1,311 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Sheggar Wheels — design tokens
+   Tailwind v4 is CSS-first: these become utilities automatically.
+   --color-forest  -> bg-forest / text-forest / border-forest
+   --radius-card   -> rounded-card
+------------------------------------------------------------------- */
+
+@theme {
+  /* Surfaces */
+  --color-canvas: #faf8f4;
+  --color-sand: #f3ede3;
+  --color-line: #e4ded2;
+  --color-white: #ffffff;
+
+  /* Brand */
+  --color-ink: #14181a;
+  --color-forest: #0b3d2e;
+  --color-forest-600: #175b45;
+  --color-forest-tint: #e7efea;
+  --color-ochre: #d99a2b;
+  /* Darker ochre for small text: the brand gold fails 4.5:1 on canvas. */
+  --color-ochre-ink: #8a5a12;
+  /* Lighter gold for text on the forest panels. */
+  --color-ochre-200: #f0c979;
+  --color-ochre-tint: #fbf0da;
+
+  /* Support */
+  --color-blue: #2a5c8a;
+  --color-blue-tint: #e6eef5;
+  --color-muted: #5b6472;
+  --color-muted-tint: #f2f1ee;
+  --color-success: #2f7a55;
+  --color-success-tint: #e6f1ea;
+  --color-warning: #b5761a;
+  --color-danger: #b3402f;
+  --color-danger-tint: #f8e9e6;
+
+  /* Shape */
+  --radius-card: 1rem;
+  --radius-btn: 0.75rem;
+
+  /* Elevation */
+  --shadow-card: 0 1px 2px rgb(20 24 26 / 0.04), 0 1px 3px rgb(20 24 26 / 0.03);
+  --shadow-float: 0 8px 24px -8px rgb(20 24 26 / 0.18), 0 2px 6px rgb(20 24 26 / 0.06);
+}
+
+/* Fonts are injected by next/font on <html>; inline so utilities resolve them. */
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Display face is reserved for page-level headings. Card and section
+     headings stay in the UI face so dense screens keep their clarity. */
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+
+  /* Visible focus for every interactive element, keyboard only. */
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-sand);
+    color: var(--color-ink);
+  }
+
+  /* Numbers that must not jitter: prices, totals, counts. */
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.premium-site {
+  --color-canvas: #11141a;
+  --color-sand: #1c2027;
+  --color-line: #30343b;
+  --color-white: #ffffff;
+  --color-ink: #f2efe8;
+  --color-forest: #d1ad59;
+  --color-forest-600: #e3c36d;
+  --color-forest-tint: #29251c;
+  --color-ochre: #d1ad59;
+  --color-ochre-ink: #dec170;
+  --color-ochre-200: #e2c875;
+  --color-ochre-tint: #252219;
+  --color-blue: #8297b2;
+  --color-blue-tint: #202733;
+  --color-muted: #a5a7ad;
+  --color-muted-tint: #22262d;
+  --color-success: #75ad91;
+  --color-success-tint: #1d2a25;
+  --color-warning: #d1ad59;
+  --color-danger: #df8277;
+  --color-danger-tint: #302220;
+  --radius-card: 0.5rem;
+  --radius-btn: 0.4rem;
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.16);
+  --shadow-float: 0 18px 38px rgb(0 0 0 / 0.28);
+  min-height: 100vh;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+.premium-site .premium-header {
+  border-color: #2b3038;
+  background: rgb(17 20 26 / 0.94);
+}
+
+.premium-site .premium-announcement {
+  border-color: #514628;
+  background: #211f19;
+}
+
+.premium-site .premium-announcement p > span:first-child {
+  color: var(--color-ochre-200);
+}
+
+.premium-site .premium-announcement p > span:last-child {
+  color: #b5b2aa;
+}
+
+.premium-site .premium-announcement button {
+  color: var(--color-ochre-200);
+}
+
+.premium-site .bg-white {
+  background-color: #191d24;
+}
+
+.premium-site .bg-white\/60 {
+  background-color: #151820;
+}
+
+.premium-wordmark {
+  gap: 0.6rem;
+  color: #f1eee7;
+  text-decoration: none;
+}
+
+.premium-wordmark-mark {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--color-ochre);
+  border-radius: 50%;
+  color: var(--color-ochre);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.premium-wordmark-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.premium-wordmark-category {
+  align-self: center;
+  margin-left: -0.42rem;
+  color: #a5a7ad;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+}
+
+.premium-site .premium-book-cta,
+.premium-site a.bg-forest,
+.premium-site button.bg-forest {
+  color: #191813;
+}
+
+.premium-home-hero {
+  background: linear-gradient(180deg, #12151b 0%, #151820 100%);
+}
+
+.premium-home-copy h1 {
+  font-weight: 500;
+}
+
+.premium-gold-text {
+  color: var(--color-ochre-200);
+}
+
+.premium-home-stats {
+  border-color: #363941;
+}
+
+.premium-featured-car {
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.34);
+}
+
+.premium-featured-tag {
+  background: rgb(245 241 232 / 0.94);
+  color: #29251d;
+}
+
+.premium-featured-caption {
+  background: linear-gradient(transparent, rgb(12 14 18 / 0.94));
+}
+
+.premium-owner-panel {
+  border: 1px solid #594b2a;
+  background: #191d24;
+}
+
+.premium-site-footer {
+  background: #151820;
+}
+
+.premium-search {
+  border-color: #373b43;
+  background: #191d24;
+  box-shadow: 0 14px 38px rgb(0 0 0 / 0.2);
+}
+
+.premium-search p {
+  color: #999da5;
+}
+
+.premium-collection {
+  border-color: #30343b;
+}
+
+.premium-site .premium-car-card {
+  border-color: #30343b;
+  background: #191d24;
+}
+
+.premium-site .premium-car-photo {
+  background: #22262d;
+}
+
+.premium-site .premium-car-card h3 a:hover {
+  color: var(--color-ochre-200);
+}
+
+.premium-site .premium-car-card button {
+  color: #24211b;
+}
+
+.premium-catalogue-page {
+  padding-top: 2.5rem;
+}
+
+.premium-site :focus-visible {
+  outline-color: var(--color-ochre-200);
+}
+
+.premium-site ::selection {
+  background: #594a2a;
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .premium-wordmark-category {
+    display: none;
+  }
+
+  .premium-home-hero > div:first-child {
+    padding-top: 2rem;
+  }
+
+  .premium-home-stats {
+    gap: 0.6rem;
+  }
+
+  .premium-home-stats dd {
+    font-size: 1.25rem;
+  }
+}
+
+/* Leaflet ships 30px zoom buttons; raise them to the 44px touch target. */
+.leaflet-bar a.leaflet-control-zoom-in,
+.leaflet-bar a.leaflet-control-zoom-out,
+.leaflet-touch .leaflet-bar a.leaflet-control-zoom-in,
+.leaflet-touch .leaflet-bar a.leaflet-control-zoom-out {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 22px;
+}
