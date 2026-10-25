@@ -3,6 +3,8 @@
 A peer-to-peer car rental marketplace for Addis Ababa. Car owners list idle
 vehicles, renters book them by the day, and admins moderate the platform.
 
+**Live demo:** [sheger-wheels.vercel.app](https://sheger-wheels.vercel.app/)
+
 **This is a student capstone demo.** There is no database, no real authentication
 and no real payment. All records live in the browser and every simulated feature
 is labelled as such.
@@ -81,8 +83,8 @@ npm test        # domain + query tests (Vitest)
 ```
 
 No environment variables are required. Copy `.env.example` to `.env.local` only
-to set `NEXT_PUBLIC_SITE_URL` for a deployment. This capstone is not hosted; the
-screenshots were captured locally from the production build.
+to override `NEXT_PUBLIC_SITE_URL` for a deployment. Screenshots were captured
+locally from the production build.
 
 ## Demo accounts
 

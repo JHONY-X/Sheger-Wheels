@@ -37,11 +37,20 @@ export const metadata = {
     url: "/",
     title: TITLE,
     description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/2018%20Ford%20F-150.jpg",
+        width: 1280,
+        height: 788,
+        alt: "2018 Ford F-150 available on Sheggar Wheels",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: TITLE,
     description: SITE_DESCRIPTION,
+    images: ["/2018%20Ford%20F-150.jpg"],
   },
 };
 
