@@ -14,9 +14,24 @@ export function Wordmark({ href = "/", className, compact = false, premium = fal
     >
       {premium ? (
         <>
-          <span aria-hidden className="premium-wordmark-mark">S</span>
-          <span className="premium-wordmark-name">SHEGER</span>
-          {!compact && <span className="premium-wordmark-category">WHEELS</span>}
+          <span
+            aria-hidden
+            className="flex size-8 items-center justify-center rounded-lg bg-forest text-white"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="size-4.5 stroke-white stroke-[2.2]">
+              <path d="M12 2L3 21h4.5l2.25-5.5h4.5L16.5 21H21L12 2z" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <div className="flex flex-col">
+            <span className="font-sans text-sm font-bold tracking-[0.15em] text-ink">
+              SHEGGAR WHEELS
+            </span>
+            {!compact && (
+              <span className="-mt-0.5 text-[9px] font-medium tracking-[0.18em] text-muted">
+                CAR RENTAL
+              </span>
+            )}
+          </div>
         </>
       ) : (
         <>

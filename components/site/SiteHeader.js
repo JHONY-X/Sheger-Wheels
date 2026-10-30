@@ -12,9 +12,11 @@ import { useHydrated } from "@/lib/use-hydrated";
 import { Wordmark } from "./Wordmark";
 
 const NAV = [
-  { href: "/cars", label: "Browse cars" },
-  { href: "/#how-it-works", label: "How it works" },
-  { href: "/#for-owners", label: "For owners" },
+  { href: "/", label: "Home" },
+  { href: "/cars", label: "Fleet" },
+  { href: "/#chauffeur", label: "Chauffeur" },
+  { href: "/#for-owners", label: "For Owners" },
+  { href: "/#about", label: "About" },
 ];
 
 function initials(name) {
@@ -38,25 +40,26 @@ export function SiteHeader({ premium = false }) {
 
   return (
     <header className={cn("sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur", premium && "premium-header")}>
-      <div className="mx-auto flex h-18 w-full max-w-[1200px] items-center justify-between gap-4 px-6">
-        <div className="flex items-center gap-8">
+      <div className="mx-auto flex h-16 w-full max-w-[1280px] items-center justify-between gap-4 px-6">
+        <div className="flex items-center gap-10">
           <Wordmark premium={premium} />
 
           <nav aria-label="Main" className="hidden items-center gap-6 md:flex">
             {NAV.map((item) => {
-              const active =
-                item.href === "/cars" && pathname.startsWith("/cars");
+              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
               return (
                 <Link
-                  key={item.href}
+                  key={item.label}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-sm font-medium transition-colors hover:text-forest",
-                    active ? "text-forest" : "text-ink/80",
+                    "text-sm font-medium transition-colors",
+                    active
+                      ? "text-ink"
+                      : "text-muted hover:text-ink",
                   )}
                 >
-                  {premium && item.href === "/cars" ? "Fleet" : item.label}
+                  {item.label}
                 </Link>
               );
             })}
@@ -102,8 +105,20 @@ export function SiteHeader({ premium = false }) {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2">
-          <DemoChip className="hidden lg:inline-flex" />
+        <div className="flex items-center gap-3">
+          {/* Language selector */}
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-line text-xs font-medium text-muted">
+            <svg viewBox="0 0 24 24" fill="none" className="size-3.5 stroke-current stroke-2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+            <span>EN</span>
+            <svg viewBox="0 0 20 20" fill="none" className="size-3 stroke-current stroke-2">
+              <path d="m6 8 4 4 4-4" />
+            </svg>
+          </div>
+
+          <DemoChip className="hidden xl:inline-flex" />
 
           {user ? (
             <div className="hidden items-center gap-3 md:flex">
@@ -127,11 +142,11 @@ export function SiteHeader({ premium = false }) {
               >
                 <span
                   aria-hidden
-                  className="flex size-8 items-center justify-center rounded-full bg-forest-tint text-xs font-semibold text-forest"
+                  className="flex size-7 items-center justify-center rounded-full bg-forest/15 text-xs font-semibold text-forest"
                 >
                   {initials(user.name)}
                 </span>
-                <span className="max-w-[10rem] truncate font-medium text-ink">
+                <span className="max-w-[10rem] truncate text-sm font-medium text-ink">
                   {user.name.split(" ")[0]}
                 </span>
               </Link>
@@ -140,19 +155,24 @@ export function SiteHeader({ premium = false }) {
               </Button>
             </div>
           ) : (
-            <div className="hidden items-center gap-2 md:flex">
-              <Button variant="ghost" size="sm" href="/signin">
-                Sign in
+            <div className="hidden items-center gap-3 md:flex">
+              <Link
+                href="/signin"
+                className="flex items-center gap-1.5 text-sm font-medium text-muted hover:text-ink transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="size-4 stroke-current stroke-2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Sign In</span>
+              </Link>
+              <Button
+                className="bg-forest hover:bg-forest-600 text-white text-sm font-medium px-5 py-2 rounded-btn transition-colors"
+                size="sm"
+                href="/cars"
+              >
+                Reserve a Car
               </Button>
-              {premium ? (
-                <Button className="premium-book-cta" size="sm" href="/cars">
-                  Book a car
-                </Button>
-              ) : (
-                <Button size="sm" href="/signup">
-                  List your car
-                </Button>
-              )}
             </div>
           )}
 
@@ -162,7 +182,7 @@ export function SiteHeader({ premium = false }) {
             aria-controls="mobile-nav"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex size-11 shrink-0 items-center justify-center rounded-btn border border-line bg-white text-ink md:hidden"
+            className="flex size-10 shrink-0 items-center justify-center rounded-btn border border-line text-ink md:hidden"
           >
             <svg
               aria-hidden
@@ -184,7 +204,7 @@ export function SiteHeader({ premium = false }) {
           <nav aria-label="Mobile" className="mx-auto flex max-w-[1200px] flex-col gap-1 px-6 py-4">
             {NAV.map((item) => (
               <Link
-                key={item.href}
+                key={item.label}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-btn px-2 py-2.5 text-sm font-medium text-ink hover:bg-sand"
