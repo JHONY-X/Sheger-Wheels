@@ -100,203 +100,203 @@
 }
 
 .premium-site {
-  --color-canvas: #0a0d14;
-  --color-sand: #131722;
-  --color-line: #222938;
+  --color-canvas: #11141a;
+  --color-sand: #1c2027;
+  --color-line: #30343b;
   --color-white: #ffffff;
-  --color-ink: #f0f4fc;
-  --color-forest: #2563eb;
-  --color-forest-600: #3b82f6;
-  --color-forest-tint: #172554;
-  --color-ochre: #38bdf8;
-  --color-ochre-ink: #60a5fa;
-  --color-ochre-200: #93c5fd;
-  --color-ochre-tint: #0f172a;
-  --color-blue: #38bdf8;
-  --color-blue-tint: #0369a1;
-  --color-muted: #8b9bb4;
-  --color-muted-tint: #161c28;
-  --color-success: #34d399;
-  --color-success-tint: #064e3b;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --color-danger-tint: #450a0a;
-  --radius-card: 1rem;
-  --radius-btn: 0.6rem;
-  --shadow-card: 0 12px 30px rgb(0 0 0 / 0.5);
-  --shadow-float: 0 24px 60px rgb(0 0 0 / 0.75);
+  --color-ink: #f2efe8;
+  --color-forest: #d1ad59;
+  --color-forest-600: #e3c36d;
+  --color-forest-tint: #29251c;
+  --color-ochre: #d1ad59;
+  --color-ochre-ink: #dec170;
+  --color-ochre-200: #e2c875;
+  --color-ochre-tint: #252219;
+  --color-blue: #8297b2;
+  --color-blue-tint: #202733;
+  --color-muted: #a5a7ad;
+  --color-muted-tint: #22262d;
+  --color-success: #75ad91;
+  --color-success-tint: #1d2a25;
+  --color-warning: #d1ad59;
+  --color-danger: #df8277;
+  --color-danger-tint: #302220;
+  --radius-card: 0.5rem;
+  --radius-btn: 0.4rem;
+  --shadow-card: 0 8px 24px rgb(0 0 0 / 0.16);
+  --shadow-float: 0 18px 38px rgb(0 0 0 / 0.28);
   min-height: 100vh;
   background: var(--color-canvas);
   color: var(--color-ink);
 }
 
 .premium-site .premium-header {
-  border-color: #1e2636;
-  background: rgb(10 13 20 / 0.85);
+  border-color: #2b3038;
+  background: rgb(17 20 26 / 0.94);
 }
 
 .premium-site .premium-announcement {
-  border-color: #1e3a8a;
-  background: #0f172a;
+  border-color: #514628;
+  background: #211f19;
 }
 
 .premium-site .premium-announcement p > span:first-child {
-  color: #60a5fa;
+  color: var(--color-ochre-200);
 }
 
 .premium-site .premium-announcement p > span:last-child {
-  color: #94a3b8;
+  color: #b5b2aa;
 }
 
 .premium-site .premium-announcement button {
-  color: #93c5fd;
+  color: var(--color-ochre-200);
 }
 
 .premium-site .bg-white {
-  background-color: #131822;
+  background-color: #191d24;
 }
 
 .premium-site .bg-white\/60 {
-  background-color: #0f141d;
+  background-color: #151820;
 }
 
 .premium-wordmark {
-  gap: 0.75rem;
-  color: #f0f4fc;
+  gap: 0.6rem;
+  color: #f1eee7;
   text-decoration: none;
+}
+
+.premium-wordmark-mark {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--color-ochre);
+  border-radius: 50%;
+  color: var(--color-ochre);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.premium-wordmark-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.premium-wordmark-category {
+  align-self: center;
+  margin-left: -0.42rem;
+  color: #a5a7ad;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
 }
 
 .premium-site .premium-book-cta,
 .premium-site a.bg-forest,
 .premium-site button.bg-forest {
-  background-color: #2563eb;
-  color: #ffffff;
-}
-
-.premium-site a.bg-forest:hover,
-.premium-site button.bg-forest:hover {
-  background-color: #3b82f6;
+  color: #191813;
 }
 
 .premium-home-hero {
-  background: radial-gradient(circle at 50% 20%, #151d30 0%, #0a0d14 75%);
+  background: linear-gradient(180deg, #12151b 0%, #151820 100%);
 }
 
 .premium-home-copy h1 {
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .premium-gold-text {
-  color: #60a5fa;
+  color: var(--color-ochre-200);
 }
 
 .premium-home-stats {
-  border-color: #222938;
+  border-color: #363941;
 }
 
 .premium-featured-car {
-  box-shadow: 0 25px 65px rgb(0 0 0 / 0.6);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.34);
 }
 
 .premium-featured-tag {
-  background: rgb(10 13 20 / 0.85);
-  color: #38bdf8;
-  border: 1px solid #222938;
+  background: rgb(245 241 232 / 0.94);
+  color: #29251d;
 }
 
 .premium-featured-caption {
-  background: linear-gradient(transparent, rgb(10 13 20 / 0.95));
+  background: linear-gradient(transparent, rgb(12 14 18 / 0.94));
 }
 
 .premium-owner-panel {
-  border: 1px solid #1e3a8a;
-  background: #0f172a;
+  border: 1px solid #594b2a;
+  background: #191d24;
 }
 
 .premium-site-footer {
-  background: #090c12;
+  background: #151820;
 }
 
 .premium-search {
-  border-color: #222938;
-  background: #131822;
-  box-shadow: 0 16px 45px rgb(0 0 0 / 0.5);
+  border-color: #373b43;
+  background: #191d24;
+  box-shadow: 0 14px 38px rgb(0 0 0 / 0.2);
 }
 
 .premium-search p {
-  color: #8b9bb4;
+  color: #999da5;
 }
 
 .premium-collection {
-  border-color: #222938;
+  border-color: #30343b;
 }
 
 .premium-site .premium-car-card {
-  border-color: #222938;
-  background: #131822;
+  border-color: #30343b;
+  background: #191d24;
 }
 
 .premium-site .premium-car-photo {
-  background: #18202d;
+  background: #22262d;
 }
 
 .premium-site .premium-car-card h3 a:hover {
-  color: #60a5fa;
+  color: var(--color-ochre-200);
 }
 
 .premium-site .premium-car-card button {
-  color: #f0f4fc;
+  color: #24211b;
 }
 
 .premium-catalogue-page {
-  padding-top: 2rem;
+  padding-top: 2.5rem;
 }
 
 .premium-site :focus-visible {
-  outline-color: #38bdf8;
+  outline-color: var(--color-ochre-200);
 }
 
 .premium-site ::selection {
-  background: #2563eb;
+  background: #594a2a;
   color: #fff;
 }
 
 @media (max-width: 640px) {
+  .premium-wordmark-category {
+    display: none;
+  }
+
   .premium-home-hero > div:first-child {
     padding-top: 2rem;
   }
-}
 
-.premium-site select,
-.premium-site input,
-.premium-site textarea {
-  background-color: #121620 !important;
-  border-color: #242c3d !important;
-  color: #f0f4fc !important;
-}
+  .premium-home-stats {
+    gap: 0.6rem;
+  }
 
-.premium-site select:focus,
-.premium-site input:focus,
-.premium-site textarea:focus {
-  border-color: #3b82f6 !important;
-  outline: none;
-}
-
-.premium-site .rounded-card {
-  border-color: #1e2636;
-}
-
-.premium-site td,
-.premium-site th {
-  border-color: #1e2636 !important;
-}
-
-.premium-site thead {
-  background-color: #101520 !important;
-}
-
-.premium-site tr:hover {
-  background-color: #141a27 !important;
+  .premium-home-stats dd {
+    font-size: 1.25rem;
+  }
 }
 
 /* Leaflet ships 30px zoom buttons; raise them to the 44px touch target. */

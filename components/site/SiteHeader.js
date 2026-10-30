@@ -12,11 +12,9 @@ import { useHydrated } from "@/lib/use-hydrated";
 import { Wordmark } from "./Wordmark";
 
 const NAV = [
-  { href: "/", label: "Home" },
-  { href: "/cars", label: "Fleet" },
-  { href: "/#chauffeur", label: "Chauffeur" },
-  { href: "/#for-owners", label: "For Owners" },
-  { href: "/#about", label: "About" },
+  { href: "/cars", label: "Browse cars" },
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#for-owners", label: "For owners" },
 ];
 
 function initials(name) {
@@ -40,24 +38,25 @@ export function SiteHeader({ premium = false }) {
 
   return (
     <header className={cn("sticky top-0 z-40 border-b border-line bg-canvas/90 backdrop-blur", premium && "premium-header")}>
-      <div className="mx-auto flex h-20 w-full max-w-[1280px] items-center justify-between gap-4 px-6">
-        <div className="flex items-center gap-10">
+      <div className="mx-auto flex h-18 w-full max-w-[1200px] items-center justify-between gap-4 px-6">
+        <div className="flex items-center gap-8">
           <Wordmark premium={premium} />
 
-          <nav aria-label="Main" className="hidden items-center gap-7 md:flex">
+          <nav aria-label="Main" className="hidden items-center gap-6 md:flex">
             {NAV.map((item) => {
-              const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+              const active =
+                item.href === "/cars" && pathname.startsWith("/cars");
               return (
                 <Link
-                  key={item.label}
+                  key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-[13px] tracking-wide font-medium transition-colors hover:text-white",
-                    active ? "text-white font-semibold underline underline-offset-8 decoration-blue-500 decoration-2" : "text-muted hover:text-white",
+                    "text-sm font-medium transition-colors hover:text-forest",
+                    active ? "text-forest" : "text-ink/80",
                   )}
                 >
-                  {item.label}
+                  {premium && item.href === "/cars" ? "Fleet" : item.label}
                 </Link>
               );
             })}
@@ -103,20 +102,8 @@ export function SiteHeader({ premium = false }) {
           </nav>
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Language selector like the design */}
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-line bg-sand/60 text-xs font-medium text-ink">
-            <svg viewBox="0 0 24 24" fill="none" className="size-3.5 stroke-muted stroke-2">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            </svg>
-            <span>EN</span>
-            <svg viewBox="0 0 20 20" fill="none" className="size-3 stroke-muted stroke-2">
-              <path d="m6 8 4 4 4-4" />
-            </svg>
-          </div>
-
-          <DemoChip className="hidden xl:inline-flex" />
+        <div className="flex items-center gap-2">
+          <DemoChip className="hidden lg:inline-flex" />
 
           {user ? (
             <div className="hidden items-center gap-3 md:flex">
@@ -140,7 +127,7 @@ export function SiteHeader({ premium = false }) {
               >
                 <span
                   aria-hidden
-                  className="flex size-8 items-center justify-center rounded-full bg-blue-500/10 text-xs font-semibold text-blue-400 border border-blue-500/20"
+                  className="flex size-8 items-center justify-center rounded-full bg-forest-tint text-xs font-semibold text-forest"
                 >
                   {initials(user.name)}
                 </span>
@@ -153,27 +140,19 @@ export function SiteHeader({ premium = false }) {
               </Button>
             </div>
           ) : (
-            <div className="hidden items-center gap-3 md:flex">
-              <Link
-                href="/signin"
-                className="flex items-center gap-1.5 text-xs font-medium text-ink/90 hover:text-white px-2 py-1.5 transition-colors"
-              >
-                <svg viewBox="0 0 24 24" fill="none" className="size-3.5 stroke-current stroke-2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                <span>Sign In</span>
-              </Link>
-              <Button
-                className="bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs px-4 py-2.5 rounded-lg shadow-[0_4px_16px_rgba(37,99,235,0.35)] transition-all flex items-center gap-1.5"
-                size="sm"
-                href="/cars"
-              >
-                <span>Reserve a Car</span>
-                <svg viewBox="0 0 20 20" fill="none" className="size-3.5 stroke-white stroke-2">
-                  <path d="M4 10h12M12 6l4 4-4 4" />
-                </svg>
+            <div className="hidden items-center gap-2 md:flex">
+              <Button variant="ghost" size="sm" href="/signin">
+                Sign in
               </Button>
+              {premium ? (
+                <Button className="premium-book-cta" size="sm" href="/cars">
+                  Book a car
+                </Button>
+              ) : (
+                <Button size="sm" href="/signup">
+                  List your car
+                </Button>
+              )}
             </div>
           )}
 
@@ -205,7 +184,7 @@ export function SiteHeader({ premium = false }) {
           <nav aria-label="Mobile" className="mx-auto flex max-w-[1200px] flex-col gap-1 px-6 py-4">
             {NAV.map((item) => (
               <Link
-                key={item.label}
+                key={item.href}
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-btn px-2 py-2.5 text-sm font-medium text-ink hover:bg-sand"
