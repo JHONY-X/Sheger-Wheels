@@ -14,7 +14,7 @@ import { Wordmark } from "./Wordmark";
 const NAV = [
   { href: "/", label: "Home" },
   { href: "/cars", label: "Fleet" },
-  { href: "/#chauffeur", label: "Chauffeur" },
+  { href: "/chauffeur", label: "Chauffeur" },
   { href: "/#for-owners", label: "For Owners" },
   { href: "/#about", label: "About" },
 ];
