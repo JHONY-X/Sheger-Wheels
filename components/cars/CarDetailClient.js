@@ -14,6 +14,7 @@ import {
   CardHeader,
   EmptyState,
   Input,
+  Select,
   Skeleton,
 } from "@/components/ui";
 import { ratingForCar } from "@/lib/cars-query";
@@ -114,8 +115,15 @@ export function CarDetailClient({ id }) {
     [data.reviews, id],
   );
 
-  const rating = ratingForCar(data.reviews, id);
-  const breakdown = priceBreakdown(car?.pricePerDay ?? 0, from, to);
+  const [chauffeurOption, setChauffeurOption] = useState("none"); // "none" | chauffeurId
+  const chauffeurs = data.chauffeurs ?? [];
+  const selectedChauffeur =
+    chauffeurOption !== "none"
+      ? chauffeurs.find((c) => c.id === chauffeurOption) ?? null
+      : null;
+
+  const chauffeurPricePerDay = selectedChauffeur?.pricePerDay ?? 0;
+  const breakdown = priceBreakdown(car?.pricePerDay ?? 0, from, to, chauffeurPricePerDay);
 
   const conflict = (() => {
     if (!car || !from || !to || to < from) return null;
@@ -164,7 +172,12 @@ export function CarDetailClient({ id }) {
       return;
     }
 
-    const result = requestBooking({ carId: car.id, startDate: from, endDate: to });
+    const result = requestBooking({
+      carId: car.id,
+      startDate: from,
+      endDate: to,
+      chauffeurId: selectedChauffeur?.id ?? null,
+    });
     if (result.ok) {
       writeSession(CHECKOUT_DRAFT_KEY, {
         bookingId: result.booking.id,
@@ -413,17 +426,81 @@ export function CarDetailClient({ id }) {
                     />
                   </div>
 
+                  {/* Chauffeur Selection */}
+                  <div className="mt-4 rounded-btn border border-line bg-canvas/60 p-3.5">
+                    <div className="flex items-center justify-between">
+                      <label htmlFor="chauffeur-select" className="text-xs font-semibold uppercase tracking-[0.06em] text-ink">
+                        Chauffeur Service
+                      </label>
+                      <span className="text-[11px] text-muted">Optional</span>
+                    </div>
+                    <p className="mt-1 text-xs text-muted">
+                      Self-drive without a chauffeur, or choose a vetted professional driver.
+                    </p>
+
+                    <div className="mt-2.5">
+                      <Select
+                        id="chauffeur-select"
+                        value={chauffeurOption}
+                        onChange={(e) => setChauffeurOption(e.target.value)}
+                      >
+                        <option value="none">Without chauffeur (Self-drive) · +0 ETB</option>
+                        {chauffeurs.map((ch) => (
+                          <option key={ch.id} value={ch.id}>
+                            With chauffeur: {ch.name} ({ch.gender === "female" ? "Woman" : "Man"}) · +{formatETB(ch.pricePerDay)}/day
+                          </option>
+                        ))}
+                      </Select>
+                    </div>
+
+                    {selectedChauffeur && (
+                      <div className="mt-3 flex items-center gap-3 rounded-card border border-line/70 bg-white p-2.5">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={selectedChauffeur.avatar}
+                          alt={selectedChauffeur.name}
+                          className="size-10 rounded-full object-cover border border-line"
+                        />
+                        <div className="min-w-0 flex-1 text-xs">
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="font-semibold text-ink">{selectedChauffeur.name}</span>
+                            <span className="font-semibold text-forest">+{formatETB(selectedChauffeur.pricePerDay)}/day</span>
+                          </div>
+                          <p className="text-muted line-clamp-1">{selectedChauffeur.bio}</p>
+                          <p className="text-[11px] text-ink/75 mt-0.5">
+                            ★ {selectedChauffeur.rating} · {selectedChauffeur.experienceYears} yrs exp · {selectedChauffeur.languages.join(", ")}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {breakdown ? (
                     <dl className="mt-4 space-y-2 text-sm">
                       <div className="flex items-center justify-between">
                         <dt className="text-muted">
-                          {formatETB(car.pricePerDay)} × {breakdown.days}{" "}
-                          {breakdown.days === 1 ? "day" : "days"}
+                          Car rental ({formatETB(car.pricePerDay)} × {breakdown.days}{" "}
+                          {breakdown.days === 1 ? "day" : "days"})
                         </dt>
                         <dd data-numeric className="text-ink">
-                          {formatETB(breakdown.subtotal)}
+                          {formatETB(breakdown.carSubtotal ?? breakdown.subtotal)}
                         </dd>
                       </div>
+
+                      {breakdown.chauffeurTotal > 0 && selectedChauffeur && (
+                        <div className="flex items-center justify-between text-forest">
+                          <dt className="flex items-center gap-1.5">
+                            <span>Chauffeur ({selectedChauffeur.name})</span>
+                            <span className="text-xs text-muted">
+                              ({formatETB(selectedChauffeur.pricePerDay)} × {breakdown.days}d)
+                            </span>
+                          </dt>
+                          <dd data-numeric className="font-medium">
+                            +{formatETB(breakdown.chauffeurTotal)}
+                          </dd>
+                        </div>
+                      )}
+
                       <div className="flex items-center justify-between">
                         <dt className="text-muted">
                           Service fee ({Math.round(FEE_RATE * 100)}%)
@@ -432,6 +509,7 @@ export function CarDetailClient({ id }) {
                           {formatETB(breakdown.fee)}
                         </dd>
                       </div>
+
                       <div className="flex items-center justify-between border-t border-line pt-2">
                         <dt className="font-medium text-ink">Total</dt>
                         <dd data-numeric className="text-lg font-semibold text-ink">

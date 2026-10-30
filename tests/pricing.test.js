@@ -33,9 +33,22 @@ describe("priceBreakdown", () => {
   it("charges the nightly rate for every day plus a 10% fee", () => {
     expect(priceBreakdown(2400, "2026-10-24", "2026-10-26")).toEqual({
       days: 3,
+      carSubtotal: 7200,
+      chauffeurTotal: 0,
       subtotal: 7200,
       fee: 720,
       total: 7920,
+    });
+  });
+
+  it("calculates additional chauffeur price when provided", () => {
+    expect(priceBreakdown(2400, "2026-10-24", "2026-10-26", 800)).toEqual({
+      days: 3,
+      carSubtotal: 7200,
+      chauffeurTotal: 2400,
+      subtotal: 9600,
+      fee: 960,
+      total: 10560,
     });
   });
 

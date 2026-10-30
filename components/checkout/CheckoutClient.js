@@ -216,13 +216,23 @@ export function CheckoutClient() {
               </div>
               <div className="flex items-center justify-between gap-4">
                 <dt className="text-muted">
-                  {formatETB(booking.pricePerDay)} × {booking.days}{" "}
-                  {booking.days === 1 ? "day" : "days"}
+                  Car rental ({formatETB(booking.pricePerDay)} × {booking.days}{" "}
+                  {booking.days === 1 ? "day" : "days"})
                 </dt>
                 <dd data-numeric className="text-ink">
-                  {formatETB(booking.subtotal)}
+                  {formatETB(booking.pricePerDay * booking.days)}
                 </dd>
               </div>
+              {booking.chauffeurName && (
+                <div className="flex items-center justify-between gap-4 text-forest">
+                  <dt className="text-forest">
+                    Chauffeur ({booking.chauffeurName})
+                  </dt>
+                  <dd data-numeric className="font-medium">
+                    +{formatETB(booking.chauffeurTotal ?? (booking.chauffeurPricePerDay * booking.days))}
+                  </dd>
+                </div>
+              )}
               <div className="flex items-center justify-between gap-4">
                 <dt className="text-muted">Service fee</dt>
                 <dd data-numeric className="text-ink">

@@ -266,18 +266,40 @@ export function BookingDetailClient({ id }) {
                     {formatDate(booking.endDate)}
                   </dd>
                 </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.06em] text-muted">
+                    Driver
+                  </dt>
+                  <dd className="mt-1 text-sm font-medium text-ink">
+                    {booking.chauffeurName ? (
+                      <span className="text-forest">With Chauffeur: {booking.chauffeurName}</span>
+                    ) : (
+                      "Self-drive (No chauffeur)"
+                    )}
+                  </dd>
+                </div>
               </dl>
 
               <dl className="mt-5 space-y-2 border-t border-line pt-4 text-sm">
                 <div className="flex items-center justify-between">
                   <dt className="text-muted">
-                    {formatETB(booking.pricePerDay)} × {booking.days}{" "}
-                    {booking.days === 1 ? "day" : "days"}
+                    Car rental ({formatETB(booking.pricePerDay)} × {booking.days}{" "}
+                    {booking.days === 1 ? "day" : "days"})
                   </dt>
                   <dd data-numeric className="text-ink">
-                    {formatETB(booking.subtotal)}
+                    {formatETB(booking.pricePerDay * booking.days)}
                   </dd>
                 </div>
+                {booking.chauffeurName && (
+                  <div className="flex items-center justify-between text-forest">
+                    <dt className="text-forest">
+                      Chauffeur ({booking.chauffeurName})
+                    </dt>
+                    <dd data-numeric className="font-medium">
+                      +{formatETB(booking.chauffeurTotal ?? (booking.chauffeurPricePerDay * booking.days))}
+                    </dd>
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <dt className="text-muted">Service fee</dt>
                   <dd data-numeric className="text-ink">{formatETB(booking.fee)}</dd>
