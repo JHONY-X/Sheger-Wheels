@@ -115,6 +115,11 @@ export function CarDetailClient({ id }) {
     [data.reviews, id],
   );
 
+  const rating = useMemo(
+    () => ratingForCar(data.reviews, id),
+    [data.reviews, id],
+  );
+
   const [chauffeurOption, setChauffeurOption] = useState("none"); // "none" | chauffeurId
   const chauffeurs = data.chauffeurs ?? [];
   const selectedChauffeur =
